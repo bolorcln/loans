@@ -31,15 +31,22 @@
               (> (.getDayOfMonth (:date %)) l)
               (<= (.getDayOfMonth (:date %)) u)) items)))
 
+(defn get-month [item]
+  (.getMonthValue (:date item)))
+
+(defn get-sum [items]
+  (->> items
+       (map :amount)
+       (apply +)))
 
 (comment
   (->> (get-loans)
        (filter-by-month 8)
-       (get-segment :full))
-
-  (defn d-comp [d1 d2]
-    (.before? d1 d2))
+       (get-segment :first)
+       (get-sum))
 
   (->> (get-loans)
-       (sort-by-date))
+       (group-by get-month)
+       (map (fn [[k v]] [k (get-sum v)]))
+       (sort-by first))
   )
