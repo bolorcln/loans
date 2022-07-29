@@ -42,11 +42,15 @@
 (comment
   (->> (get-loans)
        (filter-by-month 8)
-       (get-segment :first)
+       (get-segment :second)
        (get-sum))
 
   (->> (get-loans)
        (group-by get-month)
        (map (fn [[k v]] [k (get-sum v)]))
-       (sort-by first))
+       (sort-by first)
+       (map second)
+       (apply +))
+
+  (- 514319 455971)
   )
