@@ -42,8 +42,7 @@
 (comment
   (->> (get-loans)
        (filter-by-month 8)
-       (get-segment :first)
-       (get-sum))
+       (get-segment :second))
 
   (->> (get-loans)
        (group-by get-month)
